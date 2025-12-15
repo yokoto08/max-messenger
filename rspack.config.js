@@ -28,7 +28,7 @@ export default {
         changeOrigin: true,
       },
       {
-        context: ['/ws'],
+        context: ['/chat-ws'],
         target: 'ws://localhost:3000',
         ws: true,
       }
@@ -44,11 +44,12 @@ export default {
       {
         test: /\.js$/,
         exclude: /node_modules/,
-        type: 'javascript/auto', // Явно говорим Rspack, что это современный JS
+        type: 'javascript/auto',
       },
       {
         test: /\.css$/,
-        type: 'css', // Встроенная поддержка CSS
+        use: ['style-loader', 'css-loader'], // <--- ИЗМЕНЕНИЕ ЗДЕСЬ
+        type: 'javascript/auto',
       },
       {
         test: /\.(png|svg|jpg)$/i,
