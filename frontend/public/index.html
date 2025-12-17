@@ -10,7 +10,6 @@
         <div id="auth-view">
             <div class="auth-container">
                 <h1>Max Messenger 💬</h1>
-                
                 <form id="login-form">
                     <h2>Вход</h2>
                     <input type="email" id="login-email" placeholder="Email" required>
@@ -31,20 +30,34 @@
         </div>
 
         <div id="chat-view" style="display: none;">
-            <header>
-                <span id="current-user">User</span>
-                <button id="logout-btn">Выйти</button>
-            </header>
-            <main>
-                <div id="chat-list">
-                    <p>Список чатов...</p>
+            <aside class="sidebar">
+                <div class="sidebar-header">
+                    <span id="current-user">User</span>
+                    <button id="logout-btn">Выйти</button>
                 </div>
-                <div id="chat-window">
-                    <div id="messages"></div>
-                    <div class="input-area">
-                        <input type="text" id="message-input" placeholder="Напиши сообщение...">
-                        <button id="send-btn">Send</button>
+                
+                <div class="create-chat-block">
+                    <input type="text" id="new-chat-name" placeholder="Название нового чата">
+                    <button id="create-chat-btn" title="Создать чат">+</button>
+                </div>
+                
+                <div id="chat-list">
                     </div>
+            </aside>
+
+            <main class="chat-main">
+                <header id="chat-header">
+                    <h3>Выберите чат слева 👈</h3>
+                </header>
+                
+                <div id="messages"></div>
+                
+                <div class="input-area" id="input-area" style="display:none;">
+                    <input type="file" id="file-input" style="display: none;">
+                    <button id="attach-btn" title="Прикрепить файл">📎</button>
+                    
+                    <input type="text" id="message-input" placeholder="Напиши сообщение...">
+                    <button id="send-btn">Send</button>
                 </div>
             </main>
         </div>

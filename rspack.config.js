@@ -21,6 +21,7 @@ export default {
     static: {
       directory: path.join(__dirname, 'frontend/public'),
     },
+    // ВАЖНО: Настройки прокси для связи с бэкендом
     proxy: [
       {
         context: ['/api', '/auth'],
@@ -28,7 +29,7 @@ export default {
         changeOrigin: true,
       },
       {
-        context: ['/chat-ws'],
+        context: ['/chat-ws'], // Наш специальный путь для сокетов
         target: 'ws://localhost:3000',
         ws: true,
       }
@@ -48,7 +49,7 @@ export default {
       },
       {
         test: /\.css$/,
-        use: ['style-loader', 'css-loader'], // <--- ИЗМЕНЕНИЕ ЗДЕСЬ
+        use: ['style-loader', 'css-loader'],
         type: 'javascript/auto',
       },
       {
