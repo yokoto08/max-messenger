@@ -279,4 +279,66 @@ function renderMessages(messages) {
              handleSendMessage();
           }
       };
+      // ================================================================
+  // ЛОГИКА REAL-TIME (WEBSOCKET)
+  // ================================================================
+  
+  function connectWebSocket() {
+      // Определяем адрес: берем текущий IP, но порт ставим 3000 (где бэкенд)
+      const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+      const host = window.location.hostname; // Например, 172.20.10.4
+      const port = '3000'; 
+      
+      const ws = new WebSocket(`${protocol}//${host}:${port}`);
+
+      ws.onopen = () => {
+          console.log('🟢 WebSocket подключен!');
+      };
+
+      ws.onmessage = (event) => {
+          // Когда прилетает сообщение от сервера...
+          const data = JSON.parse(event.data);
+          
+          if (data.type === 'NEW_MESSAGE') {
+              const message = data.payload;
+              
+              // Если мы прямо сейчас смотрим этот чат - показываем сообщение
+              if (currentChatId && message.chat_id === currentChatId) {
+                  appendMessageToView(message);
+              }
+          }
+      };
+
+      ws.onclose = () => {
+          console.log('🔴 WebSocket отключился. Пробуем переподключиться через 3 сек...');
+          setTimeout(connectWebSocket, 3000);
+      };
+      
+      ws.onerror = (error) => {
+          console.error('WebSocket ошибка:', error);
+      };
+  }
+
+  // Вспомогательная функция, чтобы просто добавить div в конец списка
+  function appendMessageToView(msg) {
+      const container = document.getElementById('messages');
+      if (!container) return;
+
+      const div = document.createElement('div');
+      div.className = 'message';
+      // Можно добавить стили, чтобы отличать свои сообщения от чужих
+      // const isMine = msg.user_id === myUserId; 
+      
+      // Если есть имя пользователя в ответе сервера, используем его, иначе 'User'
+      const authorName = msg.username || 'Собеседник';
+      
+      div.innerHTML = `<b>${authorName}:</b> ${msg.content}`;
+      container.appendChild(div);
+      
+      // Прокрутка вниз
+      container.scrollTop = container.scrollHeight;
+  }
+
+  // ЗАПУСКАЕМ СЛУШАТЕЛЯ!
+  connectWebSocket();
   }
