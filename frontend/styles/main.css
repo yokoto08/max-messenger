@@ -50,6 +50,6 @@ a { color: #007bff; text-decoration: none; cursor: pointer; }
 #send-btn { width: auto; padding: 0 25px; }
 
 /* Регистрация */
-.registration:hover {
+#go-to-register:hover, #go-to-login:hover {
     border-bottom: 1px solid #007bff;
 }
