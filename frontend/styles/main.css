@@ -48,3 +48,8 @@ a { color: #007bff; text-decoration: none; cursor: pointer; }
 #attach-btn { width: 45px; height: 45px; background: #6c757d; border-radius: 50%; font-size: 1.2rem; }
 #message-input { flex: 1; margin: 0; }
 #send-btn { width: auto; padding: 0 25px; }
+
+/* Регистрация */
+.registration:hover {
+    border-bottom: 1px solid #007bff;
+}
